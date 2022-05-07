@@ -9,6 +9,7 @@ const {
   removeMediaById,
 } = require("./mediaManager");
 const { MessageEmbed } = require("discord.js");
+const { getInfoEmbed } = require("./embedTemplate");
 
 const getUserNickname = async (msg, uid) => {
   return await msg.guild.members.fetch(uid);
@@ -70,6 +71,7 @@ const handleAliasUpdate = async (msg, args) => {
 };
 
 const handleUrlUpdate = async (msg, args) => {
+  console.log(args);
   if (args.length <= 2) {
     if (args[0]) {
       if (args[1]) {
@@ -117,22 +119,9 @@ const handleInfo = async (msg, args) => {
             : await getUserNickname(msg, media.updaterId);
         return result(
           true,
-          new MessageEmbed({
-            title: `Media info`,
-            description: `**alias:** ${media.alias}\n\n**URL:** ${
-              media.url
-            }\n\n\n**ID:** ${
-              media._id
-            }\n\n**uploaded by:** ${uploaderNickname} on ${new Date(
-              media.createdAt
-            ).toUTCString()}\n\n**last updated by:** ${updaterNickname} on ${new Date(
-              media.updatedAt
-            ).toUTCString()}`,
-            color: 0xff0055,
-            image: {
-              url: media.url,
-            },
-          })
+          new MessageEmbed(
+            getInfoEmbed(media, uploaderNickname, updaterNickname)
+          )
         );
       }
       return result(false, "Sorry, I couldn't find that media...");
