@@ -1,5 +1,12 @@
 # digitan
 
+<<<<<<< HEAD
+=======
+Current version: `1.0.0`
+
+## Concept
+
+>>>>>>> d3032c477486d97d2b29dc13d5a41bfff392eb38
 This bot allows free media saving using Discord's CDN and links any image, video, tweet etc. to a custom alias given by users. You no longer need to buy nitro to get decent size stickers!
 
 ## Commands
@@ -22,8 +29,12 @@ The available commands are listed here:
 
 Hotfix.
 
+<<<<<<< HEAD
 - Corrected the unknown command case message to print the right `help` command.
 - Improved the argument filter to accept accidental empty spaces in excess.
+=======
+- d
+>>>>>>> d3032c477486d97d2b29dc13d5a41bfff392eb38
 
 ### 1.0.0
 
