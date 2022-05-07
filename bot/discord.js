@@ -33,7 +33,7 @@ const startBot = () => {
       !msg.member.user.bot &&
       msg.content.startsWith(process.env.COMMAND_PREFIX)
     ) {
-      const args = msg.content.split(" ", process.env.MAX_ARGS).slice(1);
+      const args = getArgs(msg);
       switch (args[0]) {
         case "ping":
           msg.channel.send("Pong!");
@@ -92,46 +92,6 @@ const startBot = () => {
     }
   });
 
-  /*client.on("interactionCreate", (interaction) => {
-    if (!interaction.isAutocomplete()) return; // We return if the interaction is not a AutoCompleteInteraction
-    if (interaction.commandName === 'autocomplete') { // check if they used the command /autocomplete
-      console.log('Typing in our command')
-    }
-    const currentValue = interaction.options.getFocused();
-    if (currentValue.startsWith("Foo")) {
-      interaction
-        .respond([
-          {
-            name: "Foobar",
-            value: "Foobar",
-          },
-          {
-            name: "Food",
-            value: "Food",
-          },
-        ])
-        .then(console.log)
-        .catch(console.error);
-      return;
-    }
-    if (currentValue.startsWith("Test")) {
-      interaction
-        .respond([
-          {
-            name: "Test1",
-            value: "Test1",
-          },
-          {
-            name: "Test2",
-            value: "Test2",
-          },
-        ])
-        .then(console.log)
-        .catch(console.error);
-      return;
-    }
-  });*/
-
   //make sure this line is the last line
   client.login(process.env.CLIENT_TOKEN); //login bot using token
 };
@@ -139,6 +99,13 @@ const startBot = () => {
 const stopBot = () => {
   client.destroy();
 };
+
+// Ignore empty strings if consecutive whitespaces are accidentally used
+const getArgs = (msg) =>
+  msg.content
+    .split(" ", process.env.MAX_ARGS)
+    .filter((e) => e && e !== "")
+    .slice(1);
 
 module.exports = {
   startBot,

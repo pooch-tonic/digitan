@@ -9,7 +9,7 @@ const help = `Here are the commands you can use:
 **update:url** - Update the url for a media entry. Syntax: \`${process.env.COMMAND_PREFIX} update <id> <url>\`
 `;
 
-const unknownCommand = `Sorry, I couldn't understand your request... Type \`${process.env.COMMAND_PREFIX} media help\` to display related commands.`;
+const unknownCommand = `Sorry, I couldn't understand your request... Type \`${process.env.COMMAND_PREFIX} help\` to display related commands.`;
 
 module.exports = {
   help,
