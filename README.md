@@ -22,12 +22,8 @@ The available commands are listed here:
 
 Hotfix.
 
-<<<<<<< HEAD
-
 - Corrected the unknown command case message to print the right `help` command.
-- # Improved the argument filter to accept accidental empty spaces in excess.
-- d
-  > > > > > > > d3032c477486d97d2b29dc13d5a41bfff392eb38
+- Improved the argument filter to accept accidental empty spaces in excess.
 
 ### 1.0.0
 
