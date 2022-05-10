@@ -12,7 +12,7 @@ const help = `Here are the commands you can use:
 **version** - Give information about the current version. Syntax: \`${process.env.COMMAND_PREFIX} version\`
 `;
 
-const unknownCommand = `Sorry, I couldn't understand your request... Type \`${process.env.COMMAND_PREFIX} media help\` to display related commands.`;
+const unknownCommand = `Sorry, I couldn't understand your request... Type \`${process.env.COMMAND_PREFIX} help\` to display related commands.`;
 
 const version = `**Current version: \`${packageJson.version}\`**
 For more information, please read the release notes: https://github.com/pooch-tonic/digitan/releases`;

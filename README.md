@@ -19,6 +19,12 @@ The available commands are listed here:
 
 ## Version history
 
+### v1.1.1
+
+Hotfix.
+
+- Corrected the unknown command case message again, that somehow wasn't fixed with v.1.0.1.
+
 ### v1.1.0
 
 Minor enhancements and a few fixes.
