@@ -9,9 +9,7 @@ const {
   handleUrlUpdate,
   handleRemove,
 } = require("./mediaController");
-const { help, unknownCommand } = require("./texts");
-const { MessageEmbed } = require("discord.js");
-
+const { help, unknownCommand, version } = require("./texts");
 let client;
 
 const startBot = () => {
@@ -81,7 +79,12 @@ const startBot = () => {
           break;
         case "info":
           const infoRes = await handleInfo(msg, args.slice(1));
-          msg.channel.send({ embeds: [infoRes.msg] });
+          msg.channel.send(
+            infoRes.success ? { embeds: [infoRes.msg] } : infoRes.msg
+          );
+          break;
+        case "version":
+          msg.channel.send(version);
           break;
         case "help":
           msg.channel.send(help);
