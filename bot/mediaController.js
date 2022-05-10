@@ -1,6 +1,6 @@
 const {
   getMediaByAlias,
-  getMediaById,
+  getMediaByAliasOrId,
   addMedia,
   getRandomMedia,
   getAllAliases,
@@ -8,8 +8,8 @@ const {
   updateMediaUrlById,
   removeMediaById,
 } = require("./mediaManager");
-const { MessageEmbed } = require("discord.js");
 const { getInfoEmbed } = require("./embedTemplate");
+const { MessageEmbed } = require("discord.js");
 
 const getUserNickname = async (msg, uid) => {
   return await msg.guild.members.fetch(uid);
@@ -35,16 +35,23 @@ const handleAdd = async (msg, args) => {
   return result(false, "Too many arguments!");
 };
 
-const handleRemove = async (id) => {
-  if (id) {
-    const deletedId = await removeMediaById(id);
-    if (deletedId) {
+const handleRemove = async (arg) => {
+  if (arg) {
+    const media = await getMediaByAliasOrId(arg);
+    if (media) {
+      const deletedId = await removeMediaById(media._id);
+      if (deletedId) {
+        return result(
+          true,
+          `Done! Media of ID *${deletedId}* has been removed from my database.`
+        );
+      }
       return result(
-        true,
-        `Done! Media of ID *${deletedId}* has been removed from my database.`
+        false,
+        `For some reason, I couldn't delete the given media...`
       );
     }
-    return result(false, "The media for this ID doesn't exist!");
+    return result(false, "I can't find any media matching that alias or ID.");
   }
   return result(false, "Please give me a media ID.");
 };
@@ -53,41 +60,60 @@ const handleAliasUpdate = async (msg, args) => {
   if (args.length <= 2) {
     if (args[0]) {
       if (args[1]) {
-        const updatedId = await updateMediaAliasById(
-          args[0],
-          args[1],
-          msg.author.id
-        );
+        const media = await getMediaByAliasOrId(args[0]);
+        if (media) {
+          const updatedId = await updateMediaAliasById(
+            media._id,
+            args[1],
+            msg.author.id
+          );
+          return result(
+            true,
+            `Done! Media of ID *${updatedId}* has a new alias ***${args[1]}***.`
+          );
+        }
         return result(
-          true,
-          `Done! Media of ID *${updatedId}* has a new alias ***${args[1]}***.`
+          false,
+          "I can't find any media matching that alias or ID."
         );
       }
       return result(false, "Please give me its new alias.");
     }
-    return result(false, "Please give me the media ID and its new alias.");
+    return result(
+      false,
+      "Please give me the current alias (or media ID) and its new alias."
+    );
   }
   return result(false, "Too many arguments!");
 };
 
 const handleUrlUpdate = async (msg, args) => {
-  console.log(args);
   if (args.length <= 2) {
     if (args[0]) {
       if (args[1]) {
-        const updatedId = await updateMediaUrlById(
-          args[0],
-          args[1],
-          msg.author.id
-        );
+        const media = await getMediaByAliasOrId(args[0]);
+        if (media) {
+          const updatedId = await updateMediaUrlById(
+            media._id,
+            args[1],
+            msg.author.id
+          );
+          return result(
+            true,
+            `Done! Media of ID *${updatedId}* has a new url ${args[1]}.`
+          );
+        }
         return result(
-          true,
-          `Done! Media of ID *${updatedId}* has a new url ${args[1]}.`
+          false,
+          "I can't find any media matching that alias or ID."
         );
       }
       return result(false, "Please give me its new url.");
     }
-    return result(false, "Please give me the media ID and its new url.");
+    return result(
+      false,
+      "Please give me the current alias (or media ID) and its new url."
+    );
   }
   return result(false, "Too many arguments!");
 };
@@ -105,12 +131,7 @@ const handleList = async () => {
 const handleInfo = async (msg, args) => {
   if (args.length <= 1) {
     if (args[0]) {
-      let media = null;
-      if (/^[a-f\d]{24}$/i.test(args[0])) {
-        media = await getMediaById(args[0]);
-      } else {
-        media = await getMediaByAlias(args[0]);
-      }
+      const media = await getMediaByAliasOrId(args[0]);
       if (media) {
         const uploaderNickname = await getUserNickname(msg, media.uploaderId);
         const updaterNickname =
@@ -126,7 +147,7 @@ const handleInfo = async (msg, args) => {
       }
       return result(false, "Sorry, I couldn't find that media...");
     }
-    return result(false, "Please give me an alias or ID.");
+    return result(false, "Please give me an alias or media ID.");
   }
   return result(false, "Too many arguments!");
 };
@@ -134,18 +155,13 @@ const handleInfo = async (msg, args) => {
 const handleShow = async (args) => {
   if (args.length <= 1) {
     if (args[0]) {
-      let media = null;
-      if (/^[a-f\d]{24}$/i.test(args[0])) {
-        media = await getMediaById(args[0]);
-      } else {
-        media = await getMediaByAlias(args[0]);
-      }
+      const media = await getMediaByAliasOrId(args[0]);
       if (media) {
         return result(true, `*${media.alias}*\n${media.url}`);
       }
       return result(false, "Sorry, I couldn't find that media...");
     }
-    return result(false, "Please give me an alias or ID.");
+    return result(false, "Please give me an alias or media ID.");
   }
   return result(false, "Too many arguments!");
 };

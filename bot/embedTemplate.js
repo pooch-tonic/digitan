@@ -1,3 +1,6 @@
+const urlRegex =
+  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+
 const getInfoEmbed = (media, uploaderNickname, updaterNickname) => ({
   title: `Media info`,
   description: `**alias:** ${media.alias}\n\n**URL:** ${
@@ -10,9 +13,11 @@ const getInfoEmbed = (media, uploaderNickname, updaterNickname) => ({
     media.updatedAt
   ).toUTCString()}`,
   color: 0xff0055,
-  image: {
-    url: media.url,
-  },
+  image: urlRegex.test(media.url)
+    ? {
+        url: media.url,
+      }
+    : null,
 });
 
 module.exports = {

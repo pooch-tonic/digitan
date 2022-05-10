@@ -11,21 +11,31 @@ The available commands are listed here:
 - **list** - List all the saved aliases. Syntax: `digitan list`
 - **info** - Get detailed information about a media entry. Syntax: `digitan info <unique_alias|id>`
 - **add** - Add a new media entry. Syntax: `digitan add <unique_alias> <url>`
-- **remove** - Remove a media entry. Syntax: `digitan remove <id>`
-- **update:alias** - Update the alias for a media entry. Syntax: `digitan update <id> <unique_alias>`
-- **update:url** - Update the url for a media entry. Syntax: `digitan update <id> <url>`
+- **remove** - Remove a media entry. Syntax: `digitan remove <unique_alias|id>`
+- **update:alias** - Update the alias for a media entry. Syntax: `digitan update <unique_alias|id> <new_unique_alias>`
+- **update:url** - Update the url for a media entry. Syntax: `digitan update <unique_alias|id> <url>`
+- **version** - Gives information about the current version. Syntax: `digitan version`
 - **help** - Display this help with the bot. Syntax: `digitan help`
 
 ## Version history
 
-### 1.0.1
+### v1.1.0
+
+Minor enhancements and a few fixes.
+
+- `update` and `remove` commands now accept both alias and ID as reference.
+- `version` command has been added.
+- Fixed `info` command to handle invalid URLs.
+- Fixed `info` command to handle unknown media references.
+
+### v1.0.1
 
 Hotfix.
 
 - Corrected the unknown command case message to print the right `help` command.
 - Improved the argument filter to accept accidental empty spaces in excess.
 
-### 1.0.0
+### v1.0.0
 
 Initial release.
 
