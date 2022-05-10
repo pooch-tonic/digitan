@@ -24,6 +24,15 @@ const getMediaByAlias = async (alias) => {
   return null;
 };
 
+const getMediaByAliasOrId = async (arg) => {
+  if (/^[a-f\d]{24}$/i.test(arg)) {
+    media = await getMediaById(arg);
+  } else {
+    media = await getMediaByAlias(arg);
+  }
+  return media;
+};
+
 const getAllAliases = async () => {
   const result = await db().collection("media").find({}).sort({ alias: 1 });
   if (result) {
@@ -104,6 +113,7 @@ const countMedia = async () => {
 module.exports = {
   getMediaById,
   getMediaByAlias,
+  getMediaByAliasOrId,
   getRandomMedia,
   addMedia,
   countMedia,
