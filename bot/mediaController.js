@@ -10,6 +10,9 @@ const {
 } = require("./mediaManager");
 const { getInfoEmbed } = require("./embedTemplate");
 const { MessageEmbed } = require("discord.js");
+const { parse } = require("dotenv");
+
+const ALIASES_PER_PAGE = 50;
 
 const getUserNickname = async (msg, uid) => {
   return await msg.guild.members.fetch(uid);
@@ -118,13 +121,25 @@ const handleUrlUpdate = async (msg, args) => {
   return result(false, "Too many arguments!");
 };
 
-const handleList = async () => {
+const handleList = async (stringPage = 1) => {
   const aliases = await getAllAliases();
+  const total = aliases.length;
+  const pages = Math.ceil(total / ALIASES_PER_PAGE);
+  const page = parseInt(stringPage);
+  if (!Number.isFinite(page) || page < 1 || page > pages) {
+    return result(
+      false,
+      `Please provide a valid page number (from 1 to ${pages}).`
+    );
+  }
   let listString = "";
-  aliases.forEach((e) => (listString += `${e}; `));
+  aliases
+    .slice((page - 1) * ALIASES_PER_PAGE, page * ALIASES_PER_PAGE)
+    .forEach((e) => (listString += `${e}\n`));
   return result(
     true,
-    `Here are all of my ${aliases.length} saved media aliases:\n> *${listString}*`
+    `Here are some of my ${total} saved media aliases (page ${page}/${pages}):
+    >>> ${listString}`
   );
 };
 

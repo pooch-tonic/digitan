@@ -19,6 +19,12 @@ The available commands are listed here:
 
 ## Version history
 
+### v1.1.3
+
+Hotfix.
+
+- List is now paginated.
+
 ### v1.1.2
 
 Hotfix.

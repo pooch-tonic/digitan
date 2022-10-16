@@ -3,7 +3,7 @@ const packageJson = require("../package.json");
 const help = `Here are the commands you can use:
 **show** - Show a media entry. Syntax: \`${process.env.COMMAND_PREFIX} show <unique_alias|id>\`
 **random** - Show a random media entry. Syntax: \`${process.env.COMMAND_PREFIX} random\`
-**list** - List all the saved aliases. Syntax: \`${process.env.COMMAND_PREFIX} list\`
+**list** - List a page of saved aliases (displays page 1 by default). Syntax: \`${process.env.COMMAND_PREFIX} list <page>\`
 **info** - Get detailed information about a media entry. Syntax: \`${process.env.COMMAND_PREFIX} info <unique_alias|id>\`
 **add** - Add a new media entry. Syntax: \`${process.env.COMMAND_PREFIX} add <unique_alias> <url>\`
 **remove** - Remove a media entry. Syntax: \`${process.env.COMMAND_PREFIX} remove <unique_alias|id>\`
