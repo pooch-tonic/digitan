@@ -44,7 +44,7 @@ const startBot = () => {
           break;
         case "list":
           const listRes = await handleList();
-          msg.channel.send(listRes.msg);
+          msg.channel.send(listRes.msg, { split: true });
           break;
         case "update:alias":
           const updateAliasRes = await handleAliasUpdate(msg, args.slice(1));
