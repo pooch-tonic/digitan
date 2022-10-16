@@ -19,6 +19,12 @@ The available commands are listed here:
 
 ## Version history
 
+### v1.1.2
+
+Hotfix.
+
+- List now displays beyond the 2000 character limit.
+
 ### v1.1.1
 
 Hotfix.
